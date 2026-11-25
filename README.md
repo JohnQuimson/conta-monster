@@ -19,7 +19,10 @@ Se Windows chiede il permesso per il firewall, consenti le reti private. Non ser
 - Ognuno entra col **proprio PIN** (4 cifre, lo sceglie al primo accesso). Ogni partita resta firmata da chi l'ha segnata,
   con data e ora prese dal server, non dal telefono.
 - Una consegna la può confermare **solo chi riceve** la Monster: chi deve non può cancellarsi il debito da solo.
-- Una partita la può annullare solo chi l'ha segnata o chi l'ha giocata. Niente sparisce: nello storico resta "annullata da X".
+- Lo storico lo modifica **solo John** (il giocatore chiamato `John`, cambiabile con la variabile `ADMIN_NAME`): può eliminare
+  qualsiasi partita o consegna, e "Pulisci storico" toglie le modifiche oppure azzera tutto, conti compresi.
+  Quello che elimina sparisce del tutto. Il nome di John non si può cambiare (perderebbe i poteri).
+- Chi segna una partita o una consegna può annullarla da solo per 2 minuti, per correggere un tocco sbagliato (`UNDO_SECS` in `lib/app.js`).
 - Nomi aggiunti, rinominati, nascosti, foto e gusti nuovi finiscono nello storico, sotto "Modifiche".
 - PIN dimenticato: in locale si azzera cancellando il campo `pin` di quel giocatore in `data/db.json`.
 
@@ -63,7 +66,8 @@ Nota: i dati salvati in locale (`data/`) non vengono caricati online: online si 
 ## Come funziona
 - **Partita**: scegli 1v1/2v2/3v3, tocca i giocatori (primo tocco → A, secondo → B, terzo → fuori),
   poi premi chi ha vinto. Puoi annullare dal messaggio in basso.
-- **Conti**: la lista già compensata di chi dà a chi, con la Monster preferita di chi riceve. Chi riceve preme "Ricevuta".
+- **Conti**: la lista già compensata di chi dà a chi. Tocca "Guarda cosa vuole …" per vedere le Monster scelte da chi riceve,
+  in ordine (se la prima non c'è al supermercato, prendi la seconda). Chi riceve preme "Ricevuta".
 - **Storico**: partite, consegne e modifiche, con chi le ha fatte e quando.
 - **Gruppo**: aggiungi amici, nascondili, metti le foto vere delle lattine o crea gusti nuovi.
 - **Profilo** (tocca il tuo nome in alto): scegli fino a 3 Monster preferite, cambia nome o PIN.

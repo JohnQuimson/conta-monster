@@ -30,6 +30,9 @@ button{cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:trans
 :focus-visible{outline:3px solid var(--yel);outline-offset:2px}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px}
 [hidden]{display:none!important}
+button,a,summary{touch-action:manipulation}
+.gate{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.gate input{-webkit-user-select:text;user-select:text}
 
 /* lattine */
 .can{display:inline-block;aspect-ratio:56/104;height:48px;flex:none}
@@ -42,7 +45,7 @@ button{cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:trans
 .av.sm{width:28px;height:28px;font-size:12px} .av.sm .can{height:23px;margin-top:4px}
 
 /* header */
-header{padding:calc(18px + env(safe-area-inset-top)) 0 4px}
+header.wrap{padding:calc(32px + env(safe-area-inset-top)) 16px 4px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:inline-block;align-self:flex-start;background:var(--yel);color:var(--ink);font:700 19px var(--font);padding:4px 11px;border:var(--bd);border-radius:9px;transform:rotate(-2deg);box-shadow:var(--sh-s);letter-spacing:-.01em}
 .me{display:flex;align-items:center;gap:8px;border:var(--bd);background:var(--s1);border-radius:999px;padding:3px 13px 3px 3px;font-weight:700;box-shadow:var(--sh-s)}
@@ -125,11 +128,14 @@ h2:first-child{margin-top:4px}
 .pair .arr{font:700 18px var(--font);color:var(--mu);margin:0 2px}
 .qty{font:700 18px var(--font);background:var(--tx);color:var(--ink);border-radius:999px;padding:3px 11px;border:2px solid var(--ink)}
 .qty small{font-size:13px;margin-left:1px}
-.wants{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:var(--s2);border:2px solid var(--ink);border-radius:12px;padding:8px 10px}
+.wants{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:var(--s2);border:2px solid var(--ink);border-radius:12px;padding:8px 10px;width:100%;text-align:left;color:inherit}
+button.wants{cursor:pointer;box-shadow:var(--sh-s);transition:transform .08s,box-shadow .08s}
+button.wants:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .wants .cans{display:flex;gap:4px}
 .wants .can{height:42px;filter:drop-shadow(2px 2px 0 var(--ink))}
 .wants p{font-size:14px;color:var(--mu);line-height:1.3;flex:1;min-width:0}
 .wants p b{color:var(--tx);font-weight:700}
+.wants .go{font:700 24px/1 var(--font);color:var(--yel)}
 .debt .act{grid-column:1/-1;display:flex;gap:8px;align-items:center;justify-content:flex-end}
 .debt .act .note{font:500 13px var(--font);color:var(--dim);margin-right:auto}
 .btn{white-space:nowrap;background:var(--grn);color:var(--ink);border:var(--bd);border-radius:12px;padding:10px 18px;font:700 15px var(--font);box-shadow:var(--sh-s);transition:transform .08s,box-shadow .08s}
@@ -156,8 +162,6 @@ h2:first-child{margin-top:4px}
 .ev .t .w{color:var(--yel)} .ev .t .l{color:var(--mu)}
 .ev .meta{font:500 12px var(--font);color:var(--dim);display:block;margin-top:3px}
 .ev .meta .by{color:var(--mu)}
-.ev.gone .t{opacity:.55} .ev.gone .t>b,.ev.gone .t>span:not(.meta){text-decoration:line-through}
-.ev.gone .meta{color:var(--neg)}
 .del{font:600 13px var(--font);color:var(--mu);padding:7px 10px;border-radius:9px;border:2px solid var(--s3);white-space:nowrap}
 .del:hover{color:var(--tx);border-color:var(--ink)}
 .del.arm{color:var(--ink);background:var(--neg);border-color:var(--ink)}
@@ -170,6 +174,8 @@ h2:first-child{margin-top:4px}
 .prow{display:flex;align-items:center;gap:10px;padding:11px 12px}
 .prow+.prow{border-top:2px dashed var(--s3)}
 .prow .info{flex:1;min-width:0}
+.prow .btns{display:flex;gap:6px;flex:none}
+.prow .btns .ghost{padding:7px 9px;font-size:12px}
 .prow .nm{font-weight:700;font-size:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .prow .sub{font:500 12px var(--font);color:var(--dim);display:flex;align-items:center;gap:6px;margin-top:3px}
 .prow .sub .can{height:22px}
@@ -255,6 +261,22 @@ dialog menu .sp{flex:1}
 .ghost.danger{color:var(--neg)}
 .ghost.danger.arm{background:var(--neg);color:var(--ink)}
 .fintro{color:var(--mu);font-size:14px;margin:-4px 0 14px}
+.pref-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.pref-head h3{margin:0}
+.pref-head p{font:500 13px var(--font);color:var(--mu);margin-top:2px}
+.pref-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.pref{display:flex;align-items:center;gap:14px;background:var(--s2);border:var(--bd);border-radius:14px;padding:10px 14px;box-shadow:var(--sh-s)}
+.pref .no{width:34px;height:34px;border-radius:50%;background:var(--yel);color:var(--ink);border:2px solid var(--ink);font:700 17px/30px var(--font);text-align:center;flex:none}
+.pref:nth-child(2) .no{background:var(--tx)} .pref:nth-child(3) .no{background:var(--s3);color:var(--tx)}
+.pref .can{height:74px;filter:drop-shadow(3px 3px 0 var(--ink))}
+.pref .pn{font:700 18px/1.15 var(--font)}
+.pref .ps{font:500 13px var(--font);color:var(--mu);margin-top:3px}
+.opt{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;padding:12px 14px!important;margin-top:10px;white-space:normal!important}
+.opt b{font:700 16px var(--font)}
+.opt span{font:500 13px var(--font);color:var(--mu)}
+.opt.arm span{color:var(--ink)}
+.hbar{display:flex;gap:8px;align-items:center;margin-top:14px}
+.hbar .sp{flex:1}
 @media (max-width:420px){ .fed{flex-direction:column;align-items:stretch} .fprev{justify-content:center;min-height:0} }
 .skel{height:64px;border-radius:var(--r);border:var(--bd);background:var(--s1)}
 @media (min-width:720px){
@@ -318,6 +340,17 @@ dialog menu .sp{flex:1}
     <menu><button type="button" class="ghost danger" id="flavDel">Elimina</button><button type="button" class="ghost" id="flavRestore">Ripristina originale</button><span class="sp"></span><button type="button" class="ghost" id="flavCancel">Annulla</button><button class="btn">Salva</button></menu>
   </form>
 </dialog>
+<dialog id="prefDlg">
+  <div id="prefBody"></div>
+  <menu><button type="button" class="btn alt" id="prefClose">Chiudi</button></menu>
+</dialog>
+<dialog id="clrDlg">
+  <h3>Pulisci storico</h3>
+  <p class="fintro" style="margin-bottom:0">Quello che elimini sparisce del tutto e non si può recuperare.</p>
+  <button type="button" class="ghost opt" id="clrLog"><b>Solo le modifiche</b><span>Toglie le righe "info" (chi ha aggiunto o rinominato chi). Partite e conti restano.</span></button>
+  <button type="button" class="ghost opt danger" id="clrAll"><b>Tutto, conti compresi</b><span>Elimina partite, consegne e modifiche. Tutti ripartono da zero.</span></button>
+  <menu><button type="button" class="ghost" id="clrCancel">Annulla</button></menu>
+</dialog>
 <input type="file" id="fileIn" accept="image/*" hidden>
 
 <script>
@@ -337,12 +370,16 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 const P = id => S.state.players.find(p=>p.id===id);
 const nm = id => esc(P(id)?.name ?? '?');
 const meId = () => S.me?.id;
+const isAdmin = () => !!S.me && S.me.id===S.adminId;
+// chi può eliminare dallo storico: l'amministratore sempre, chi l'ha segnata solo per pochi minuti
+const canEdit = rec => isAdmin() || (!!S.me && rec.by===S.me.id && (Date.now()+(S.skew||0))/1000-rec.ts<=S.undoSecs);
 const team = t => Object.keys(S.pick).filter(id=>S.pick[id]===t);
 
 /* ---------- server ---------- */
 function setData(j){
   if(!j.state) return;
   S.state=j.state; S.catalog=j.catalog||[]; S.needsCode=!!j.needsCode;
+  S.adminId=j.adminId||null; S.undoSecs=j.undoSecs||120; S.skew=j.now?j.now*1000-Date.now():(S.skew||0);
   S.cat=Object.fromEntries(S.catalog.map(f=>[f.id,f]));
   if(S.me && !P(S.me.id)) logout();
 }
@@ -387,12 +424,12 @@ function logout(){ S.me=null; store.set('cm_me',null); S.pick={}; }
 function stats(){
   const b={};
   S.state.players.forEach(p=>b[p.id]={net:0,w:0,l:0});
-  S.state.matches.forEach(m=>{ if(m.del) return;
+  S.state.matches.forEach(m=>{
     const W=m.winner==='A'?m.a:m.b, L=m.winner==='A'?m.b:m.a;
     W.forEach(id=>{ if(b[id]){ b[id].net++; b[id].w++; } });   // ogni vincitore riceve 1 Monster
     L.forEach(id=>{ if(b[id]){ b[id].net--; b[id].l++; } });   // ogni perdente ne dà 1
   });
-  S.state.payments.forEach(p=>{ if(p.del) return; if(b[p.from]) b[p.from].net+=p.qty; if(b[p.to]) b[p.to].net-=p.qty; });
+  S.state.payments.forEach(p=>{ if(b[p.from]) b[p.from].net+=p.qty; if(b[p.to]) b[p.to].net-=p.qty; });
   return b;
 }
 // Compensa i debiti: chi deve paga direttamente a chi deve ricevere, col minimo di passaggi.
@@ -483,7 +520,7 @@ function vMatch(){
   const act=S.state.players.filter(p=>!p.archived);
   const slots=ids=>Array.from({length:n},(_,i)=>ids[i]?`<div class="slot full">${av(ids[i])}${nm(ids[i])}</div>`:`<div class="slot">—</div>`).join('');
   const ready=A.length===n&&B.length===n;
-  const last=S.state.matches.filter(m=>!m.del).at(-1);
+  const last=S.state.matches.at(-1);
   const label=ids=>ids.map(nm).join(' + ')||'…';
   const d=new Date();
   return `<section>
@@ -511,9 +548,9 @@ function vMatch(){
 }
 
 function wants(id){
-  const p=P(id), favs=(p?.favs||[]).filter(f=>S.cat[f]);
+  const p=P(id), favs=(p?.favs||[]).filter(f=>S.cat[f]&&!S.cat[f].hidden);
   if(!favs.length) return `<div class="wants"><p>${nm(id)} non ha ancora scelto la sua Monster preferita.</p></div>`;
-  return `<div class="wants"><div class="cans">${favs.map(f=>can(f)).join('')}</div><p>${nm(id)} vuole <b>${favs.map(f=>esc(S.cat[f].name)).join('</b> o <b>')}</b></p></div>`;
+  return `<button class="wants" data-prefs="${id}"><div class="cans">${favs.map(f=>can(f)).join('')}</div><p>Guarda cosa vuole <b>${nm(id)}</b></p><span class="go" aria-hidden="true">›</span></button>`;
 }
 function vDebts(b,tr){
   const me=meId(), P0=S.state.players;
@@ -547,7 +584,8 @@ function vHist(){
   const f={all:()=>true,m:e=>e.k==='m',p:e=>e.k==='p',l:e=>e.k==='l'}[S.hf];
   ev=ev.filter(f).sort((a,b)=>b.ts-a.ts).slice(0,300);
   const seg=`<div class="seg small" role="group" aria-label="Filtro">${[['all','Tutto'],['m','Partite'],['p','Consegne'],['l','Modifiche']].map(([k,l])=>`<button data-hf="${k}" aria-pressed="${S.hf===k}">${l}</button>`).join('')}</div>`;
-  if(!ev.length) return `<section>${seg}<div class="list" style="margin-top:14px"><div class="empty"><strong>Niente da mostrare</strong>Qui compare tutto quello che viene segnato, con chi l'ha fatto e quando.</div></div></section>`;
+  const clr=isAdmin()?`<div class="hbar"><span class="hint">Solo tu puoi eliminare dallo storico</span><span class="sp"></span><button class="ghost danger" id="clrBtn">Pulisci storico</button></div>`:'';
+  if(!ev.length) return `<section>${seg}${clr}<div class="list" style="margin-top:14px"><div class="empty"><strong>Niente da mostrare</strong>Qui compare tutto quello che viene segnato, con chi l'ha fatto e quando.</div></div></section>`;
   const logText=e=>{
     const by=`<b>${nm(e.by)}</b>`, pl=`<b>${nm(e.player)}</b>`;
     return ({join:`${by} <span class="l">si è unito al gruppo</span>`, claim:`${by} <span class="l">ha attivato il suo profilo</span>`,
@@ -558,26 +596,25 @@ function vHist(){
       editFlavor:`${by} <span class="l">ha modificato</span> <b>${esc(e.name)}</b>`, hideFlavor:`${by} <span class="l">ha nascosto</span> <b>${esc(e.name)}</b>`,
       deleteFlavor:`${by} <span class="l">ha eliminato</span> <b>${esc(e.name)}</b>`, restoreFlavor:`${by} <span class="l">ha ripristinato</span> <b>${esc(e.name)}</b>`})[e.t]||`${by} <span class="l">${esc(e.t)}</span>`;
   };
-  let html=`<section>${seg}`, cur='', open=false;
+  let html=`<section>${seg}${clr}`, cur='', open=false;
   for(const e of ev){
     const d=new Date(e.ts*1000), dk=dayLabel(d);
     if(dk!==cur){ if(open) html+='</div>'; html+=`<div class="day">${dk}</div><div class="list">`; cur=dk; open=true; }
     let body, meta, canDel=false;
-    const gone=e.del?`annullata da ${nm(e.del.by)} · ${timeF.format(new Date(e.del.ts*1000))}`:'';
     if(e.k==='m'){
       const W=e.winner==='A'?e.a:e.b, L=e.winner==='A'?e.b:e.a;
       body=`<span class="tag">${e.mode}v${e.mode}</span><div class="t"><b class="w">${W.map(nm).join(' + ')}</b> <span class="l">${W.length>1?'battono':'batte'}</span> <b>${L.map(nm).join(' + ')}</b>`;
       meta=`${timeF.format(d)} · segnata da <span class="by">${nm(e.by)}</span>`;
-      canDel=me&&!e.del&&(e.by===me||[...e.a,...e.b].includes(me));
+      canDel=canEdit(e);
     }else if(e.k==='p'){
       body=`<span class="tag p">+${e.qty}</span><div class="t"><b>${nm(e.to)}</b> <span class="l">ha ricevuto ${e.qty} Monster da</span> <b>${nm(e.from)}</b>`;
       meta=`${timeF.format(d)} · confermata da <span class="by">${nm(e.by)}</span>`;
-      canDel=me&&!e.del&&e.by===me;
+      canDel=canEdit(e);
     }else{
       body=`<span class="tag l">info</span><div class="t">${logText(e)}`;
       meta=timeF.format(d);
     }
-    html+=`<div class="ev ${e.del?'gone':''}">${body}<span class="meta">${gone||meta}</span></div>${canDel?`<button class="del" data-del="${e.k}:${e.id}">Annulla</button>`:'<span></span>'}</div>`;
+    html+=`<div class="ev">${body}<span class="meta">${meta}</span></div>${canDel?`<button class="del" data-del="${e.k}:${e.id}" data-l="${isAdmin()?'Elimina':'Annulla'}">${isAdmin()?'Elimina':'Annulla'}</button>`:'<span></span>'}</div>`;
   }
   return html+'</div></section>';
 }
@@ -590,7 +627,7 @@ function vGroup(b){
     return `<div class="prow">${av(p.id)}<div class="info">
       <div class="nm">${nameEl}${p.id===me?'<span class="pill you">tu</span>':''}${!p.claimed?'<span class="pill new">da attivare</span>':''}</div>
       <div class="sub">${s.w}V · ${s.l}P${favs.length?' · '+favs.map(f=>can(f)).join(''):''}</div></div>
-      ${me&&p.id!==me?`<button class="ghost" data-arc="${p.id}" data-v="${!p.archived}">${p.archived?'Ripristina':'Nascondi'}</button>`:''}</div>`;
+      <div class="btns"><button class="ghost" data-prefs="${p.id}">Preferenze</button>${me&&p.id!==me?`<button class="ghost" data-arc="${p.id}" data-v="${!p.archived}">${p.archived?'Ripristina':'Nascondi'}</button>`:''}</div></div>`;
   };
   return `<section>
     <h2>Aggiungi un amico</h2>
@@ -649,7 +686,7 @@ const bind={
       else if(cur===undefined){ x.classList.remove('shake'); void x.offsetWidth; x.classList.add('shake'); return; }
       render();
     });
-    const t=$('#tSame'); if(t) t.onclick=()=>{ const m=S.state.matches.filter(m=>!m.del).at(-1); S.mode=m.mode; store.set('cm_mode',m.mode); S.pick={};
+    const t=$('#tSame'); if(t) t.onclick=()=>{ const m=S.state.matches.at(-1); S.mode=m.mode; store.set('cm_mode',m.mode); S.pick={};
       m.a.forEach(id=>{ if(!P(id)?.archived) S.pick[id]='A'; }); m.b.forEach(id=>{ if(!P(id)?.archived) S.pick[id]='B'; }); render(); };
     $('#tSwap').onclick=()=>{ for(const id in S.pick) S.pick[id]=S.pick[id]==='A'?'B':'A'; render(); };
     $('#tClear').onclick=()=>{ S.pick={}; render(); };
@@ -668,8 +705,9 @@ const bind={
   },
   hist(){
     $$('[data-hf]').forEach(x=>x.onclick=()=>{ S.hf=x.dataset.hf; render(); });
+    const cb=$('#clrBtn'); if(cb) cb.onclick=openClear;
     $$('[data-del]').forEach(x=>x.onclick=()=>{
-      if(!x.classList.contains('arm')){ x.classList.add('arm'); x.textContent='Sicuro?'; setTimeout(()=>{ if(x.isConnected){ x.classList.remove('arm'); x.textContent='Annulla'; } },3000); return; }
+      if(!x.classList.contains('arm')){ x.classList.add('arm'); x.textContent='Sicuro?'; setTimeout(()=>{ if(x.isConnected){ x.classList.remove('arm'); x.textContent=x.dataset.l; } },3000); return; }
       const [k,id]=x.dataset.del.split(':'); act(k==='m'?'deleteMatch':'deletePayment',{id});
     });
   },
@@ -699,6 +737,32 @@ const bind={
     $('#chgPin').onclick=()=>{ S.gate={step:'pin',mode:'change',pid:meId(),entry:'',pin1:null,err:''}; renderGate(); };
     $('#logout').onclick=()=>{ logout(); S.tab='match'; openGate(); render(); };
   }
+};
+
+/* ---------- preferenze di un giocatore ---------- */
+function openPrefs(id){
+  const p=P(id); if(!p) return;
+  const favs=(p.favs||[]).filter(f=>S.cat[f]&&!S.cat[f].hidden);
+  const hint=['La sua preferita','Se non c\'è, prendi questa','Ultima possibilità'];
+  $('#prefBody').innerHTML=`<div class="pref-head">${av(id,'lg')}<div><h3>${esc(p.name)}</h3><p>${favs.length?'Le sue Monster, in ordine di scelta':'Non ha ancora scelto'}</p></div></div>
+    ${favs.length?`<div class="pref-list">${favs.map((f,i)=>`<div class="pref"><span class="no">${i+1}</span>${can(f)}<div><div class="pn">${esc(S.cat[f].name)}</div><div class="ps">${hint[i]||''}</div></div></div>`).join('')}</div>`
+      :`<p class="fintro" style="margin-top:14px">${esc(p.name)} non ha scelto nessuna Monster preferita: chiedigli cosa vuole.</p>`}`;
+  $('#prefDlg').showModal();
+}
+$('#prefClose').onclick=()=>$('#prefDlg').close();
+document.addEventListener('click',e=>{ const b=e.target.closest('[data-prefs]'); if(b) openPrefs(b.dataset.prefs); });
+
+/* ---------- pulisci storico (solo amministratore) ---------- */
+function openClear(){
+  const a=$('#clrAll'); a.classList.remove('arm'); a.querySelector('b').textContent='Tutto, conti compresi';
+  $('#clrDlg').showModal();
+}
+$('#clrCancel').onclick=()=>$('#clrDlg').close();
+$('#clrLog').onclick=async()=>{ if(await act('clearHistory',{what:'log'})){ $('#clrDlg').close(); toast('Modifiche eliminate'); } };
+$('#clrAll').onclick=async()=>{
+  const a=$('#clrAll');
+  if(!a.classList.contains('arm')){ a.classList.add('arm'); a.querySelector('b').textContent='Sicuro? Tocca ancora per azzerare'; return; }
+  if(await act('clearHistory',{what:'all'})){ $('#clrDlg').close(); toast('Storico e conti azzerati'); }
 };
 
 /* ---------- foto ---------- */
@@ -772,8 +836,10 @@ $('#flavForm').onsubmit=async e=>{
 /* ---------- accesso con PIN ---------- */
 function openGate(err=''){ S.gate={step:'who',err}; renderGate(); }
 function closeGate(){ S.gate=null; renderGate(); render(); }
+const VP=document.querySelector('meta[name=viewport]'), VP0=VP.content;
 function renderGate(){
   const g=$('#gate'), G=S.gate;
+  VP.content=G?VP0+', maximum-scale=1, user-scalable=no':VP0; // nessuno zoom mentre si entra col PIN
   if(!G){ g.hidden=true; document.body.style.overflow=''; return; }
   g.hidden=false; document.body.style.overflow='hidden';
   const ps=(S.state?.players||[]).filter(p=>!p.archived);
