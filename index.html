@@ -55,11 +55,12 @@ header.wrap{padding:calc(32px + env(safe-area-inset-top)) 16px 4px}
 .hero.lit{color:var(--ink)}
 .hero .hl{flex:1;min-width:0}
 .hero small{display:block;font:700 15px var(--font)}
-.hero b{display:flex;align-items:baseline;gap:8px;font:700 clamp(54px,15vw,72px)/.95 var(--font);letter-spacing:-.04em}
-.hero b span{font-size:24px;letter-spacing:0}
+.hero b{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;font:700 clamp(48px,14vw,72px)/.95 var(--font);letter-spacing:-.04em}
+.hero b span{font-size:clamp(18px,6vw,24px);letter-spacing:0;line-height:1.2}
 .hero em{display:block;font:600 13px/1.4 var(--font);font-style:normal;margin-top:6px;opacity:.85}
-.hero .cans{display:flex;align-items:flex-end;padding-right:4px}
-.hero .cans .can{height:70px;margin-left:-14px;transform:rotate(var(--rot,0deg));filter:drop-shadow(3px 3px 0 var(--ink))}
+.hero .cans{display:flex;flex:none;align-items:flex-end;padding-right:4px}
+.hero .cans .can{height:clamp(50px,16vw,70px);margin-left:-10px;transform:rotate(var(--rot,0deg));filter:drop-shadow(3px 3px 0 var(--ink))}
+.hero .cans .can:first-child{margin-left:0}
 
 /* nav */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--s1);border-top:var(--bd);padding:10px 0 calc(12px + env(safe-area-inset-bottom))}
@@ -191,6 +192,14 @@ button.wants:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)
 .fl .fn{font-weight:700;font-size:13px;line-height:1.15}
 .fl .fb{font:500 11px var(--font);color:var(--dim)}
 button.fl:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.fl-wrap{position:relative;min-width:0}
+.fl-wrap>.fl{width:100%;height:100%}
+.grip{position:absolute;top:6px;left:6px;z-index:2;width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--mu);touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;background:color-mix(in srgb,var(--s3) 75%,transparent)}
+.grip:hover{color:var(--tx)}
+.fl-wrap.dragging{opacity:.3}
+.fl-ghost{position:fixed;z-index:70;pointer-events:none;transform:rotate(3deg) scale(1.05);filter:drop-shadow(6px 8px 0 rgba(0,0,0,.45))}
+.fl-ghost .grip{cursor:grabbing;color:var(--yel)}
+body.dragging-flav{-webkit-user-select:none;user-select:none;cursor:grabbing}
 .fl[aria-pressed=true]{background:var(--yel);color:var(--ink)}
 .fl .ord{position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--yel);font:700 13px/24px var(--font)}
 .fl .ph-btn{font:600 12px var(--font);color:var(--tx);border:2px solid var(--ink);background:var(--s3);border-radius:8px;padding:4px 8px}
@@ -254,8 +263,11 @@ dialog menu .sp{flex:1}
 .fprev .can+.can{height:84px}
 .fed .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
 .lbl{font:600 13px var(--font);color:var(--mu);display:flex;flex-direction:column;gap:6px}
-.colors{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.sw{display:flex;flex-direction:column;align-items:center;gap:4px;font:600 12px var(--font);color:var(--mu);cursor:pointer}
+.colors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.sw{display:flex;flex-direction:column;gap:6px;font:600 13px var(--font);color:var(--mu);min-width:0}
+.hex{width:100%;min-width:0;background:var(--s1);border:var(--bd);border-radius:10px;padding:8px 6px;font:600 14px ui-monospace,Menlo,Consolas,monospace;text-align:center;color:var(--tx)}
+.hex:focus{outline:none;box-shadow:var(--sh-s);background:var(--s2)}
+.hex.bad{border-color:var(--neg);color:var(--neg)}
 .sw input[type=color]{width:100%;height:40px;border:var(--bd);border-radius:10px;background:var(--bg);padding:2px;cursor:pointer}
 .fmeta{font:500 12px var(--font);color:var(--dim);margin-top:12px;min-height:16px}
 .ghost.danger{color:var(--neg)}
@@ -328,14 +340,15 @@ dialog menu .sp{flex:1}
       <div class="fprev" id="flavPrev"></div>
       <div class="col">
         <label class="lbl">Nome<input class="field" id="flavName" placeholder="es. Ultra Strawberry" maxlength="28" autocomplete="off" required></label>
-        <div class="colors">
-          <label class="sw"><input type="color" id="fcBody">Lattina</label>
-          <label class="sw"><input type="color" id="fcAccent">Fasce</label>
-          <label class="sw"><input type="color" id="fcInk">Scritta</label>
-        </div>
         <div class="rowbtns"><button type="button" class="ghost" id="flavPhoto">Carica foto</button><button type="button" class="ghost" id="flavNoPhoto">Togli foto</button></div>
       </div>
     </div>
+    <div class="colors">
+      <div class="sw"><span>Lattina</span><input type="color" id="fcBody" aria-label="Colore della lattina"><input class="hex" id="fhBody" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Codice colore della lattina" placeholder="#f9fe02"></div>
+      <div class="sw"><span>Logo M</span><input type="color" id="fcAccent" aria-label="Colore del logo M"><input class="hex" id="fhAccent" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Codice colore del logo M" placeholder="#f9fe02"></div>
+      <div class="sw"><span>Scritta</span><input type="color" id="fcInk" aria-label="Colore della scritta"><input class="hex" id="fhInk" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Codice colore della scritta" placeholder="#f9fe02"></div>
+    </div>
+    <p class="hint" style="margin-top:8px">Scegli il colore o scrivi il codice, per esempio #f9fe02.</p>
     <p class="fmeta" id="flavMeta"></p>
     <menu><button type="button" class="ghost danger" id="flavDel">Elimina</button><button type="button" class="ghost" id="flavRestore">Ripristina originale</button><span class="sp"></span><button type="button" class="ghost" id="flavCancel">Annulla</button><button class="btn">Salva</button></menu>
   </form>
@@ -391,7 +404,7 @@ async function load(){
     const same=S.state && S.state.rev===j.state.rev;
     setData(j); $('#banner').innerHTML='';
     if(!S.me && !S.guest && !S.gate) openGate();
-    const typing=document.activeElement?.tagName==='INPUT';
+    const typing=document.activeElement?.tagName==='INPUT'||S.dragging;
     if(!same && !typing) render(); else if(!same) S.dirty=true;
   }catch(e){
     $('#banner').innerHTML=`<div class="banner">Non riesco a leggere i dati (${esc(e.message||'rete')}). Il server è acceso?</div>`;
@@ -449,18 +462,29 @@ function settle(b){
 }
 
 /* ---------- lattine e avatar ---------- */
+// Nome su 1 riga, o su 2 se sono più parole ("Ultra" a capo "Mango"); con 3+ parole si bilancia la lunghezza.
+function canLines(name){
+  const w=String(name).trim().toUpperCase().split(/\s+/).filter(Boolean);
+  if(w.length<2) return [w[0]||''];
+  if(w.length===2) return w;
+  let best=null;
+  for(let i=1;i<w.length;i++){ const a=w.slice(0,i).join(' '), b=w.slice(i).join(' '), m=Math.max(a.length,b.length); if(!best||m<best.m) best={m,l:[a,b]}; }
+  return best.l;
+}
+// M a tre artigli: disegno nostro, ispirato al logo (non è il logo originale)
+const M_PATH='M0 40L2 6L10 0L20 22L30 0L38 6L40 40L31 40L30 18L22 36L18 36L10 18L9 40Z';
 function can(fid, extra=''){
   const f=S.cat[fid]; if(!f) return '';
-  const name=f.name.toUpperCase(), fs=Math.min(12, 76/(name.length*.62)).toFixed(1);
+  const L=canLines(f.name), longest=Math.max(1,...L.map(l=>l.length)), fs=Math.min(10, 44/(longest*.66)), lh=fs*1.25, cy=78;
+  const ys=L.length===1?[cy]:[cy-lh/2,cy+lh/2];
+  const text=L.map((l,i)=>`<text x="28" y="${ys[i].toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="font:700 ${fs.toFixed(1)}px 'Space Grotesk',sans-serif;letter-spacing:.02em" fill="${esc(f.ink)}">${esc(l)}</text>`).join('');
   const photo=f.img?`<img src="/api/img?id=${esc(f.img)}" alt="${esc(f.name)}" loading="lazy" onerror="this.remove()">`:'';
   return `<span class="can${f.img?' ph':''}" ${extra}><svg viewBox="0 0 56 104" role="img" aria-label="${esc(f.name)}">
     <rect x="10" y="1" width="36" height="8" rx="3" fill="url(#lid)"/>
     <g clip-path="url(#canclip)">
       <rect x="0" y="0" width="56" height="104" fill="${esc(f.body)}"/>
-      <path d="M0 0H56V17C40 24 18 11 0 19Z" fill="${esc(f.accent)}"/>
-      <path d="M0 88C17 81 39 94 56 85V104H0Z" fill="${esc(f.accent)}"/>
-      <text x="28" y="53" transform="rotate(-90 28 53)" text-anchor="middle" dominant-baseline="central"
-        style="font:700 ${fs}px 'Space Grotesk',sans-serif" fill="${esc(f.ink)}">${esc(name)}</text>
+      <path transform="translate(13 26) scale(.75)" d="${M_PATH}" fill="${esc(f.accent)}" stroke="${esc(f.ink)}" stroke-width="1.3" stroke-linejoin="round"/>
+      ${text}
       <rect x="0" y="0" width="56" height="104" fill="url(#shine)"/>
     </g></svg>${photo}</span>`;
 }
@@ -639,19 +663,20 @@ function vGroup(b){
   </section>`;
 }
 
+const GRIP='<svg viewBox="0 0 12 18" width="12" height="18" aria-hidden="true"><g fill="currentColor"><circle cx="3" cy="3" r="1.6"/><circle cx="9" cy="3" r="1.6"/><circle cx="3" cy="9" r="1.6"/><circle cx="9" cy="9" r="1.6"/><circle cx="3" cy="15" r="1.6"/><circle cx="9" cy="15" r="1.6"/></g></svg>';
 function vFlav(){
   const fans={};
   S.state.players.forEach(p=>(p.favs||[]).forEach(f=>{ fans[f]=(fans[f]||0)+1; }));
-  const card=f=>{
+  const card=(f,drag)=>{
     const info=[fans[f.id]?`${fans[f.id]} ♥`:'', f.img?'foto':'', !f.builtin?'creata da voi':f.edited&&!f.hidden?'modificata':''].filter(Boolean).join(' · ');
-    return `<button class="fl" data-edit="${esc(f.id)}">${can(f.id)}<div class="fn">${esc(f.name)}</div><div class="fb">${info||'&nbsp;'}</div></button>`;
+    return `<div class="fl-wrap" data-id="${esc(f.id)}">${drag?`<button class="grip" data-grip="${esc(f.id)}" aria-label="Sposta ${esc(f.name)}: trascina, o usa le frecce" title="Trascina per riordinare">${GRIP}</button>`:''}<button class="fl" data-edit="${esc(f.id)}">${can(f.id)}<div class="fn">${esc(f.name)}</div><div class="fb">${info||'&nbsp;'}</div></button></div>`;
   };
   const vis=S.catalog.filter(f=>!f.hidden), hid=S.catalog.filter(f=>f.hidden);
   return `<section>
     <h2>Le Monster <span class="hint">${vis.length}</span></h2>
-    <p class="fintro">Tocca una lattina per cambiarle nome, colori o foto.</p>
-    <div class="flavs"><button class="fl new" id="newFlav"><big>+</big>Nuova Monster</button>${vis.map(card).join('')}</div>
-    ${hid.length?`<h2>Nascoste <span class="hint">non si possono scegliere</span></h2><div class="flavs">${hid.map(card).join('')}</div>`:''}
+    <p class="fintro">Tocca una lattina per modificarla. Trascina i puntini ⋮⋮ per cambiare l'ordine.</p>
+    <div class="flavs"><button class="fl new" id="newFlav"><big>+</big>Nuova Monster</button>${vis.map(f=>card(f,true)).join('')}</div>
+    ${hid.length?`<h2>Nascoste <span class="hint">non si possono scegliere</span></h2><div class="flavs">${hid.map(f=>card(f,false)).join('')}</div>`:''}
   </section>`;
 }
 
@@ -724,6 +749,7 @@ const bind={
   flav(){
     $('#newFlav').onclick=()=>openFlavDlg(null);
     $$('[data-edit]').forEach(x=>x.onclick=()=>openFlavDlg(x.dataset.edit));
+    initFlavDrag();
   },
   me(){
     $$('[data-fav]').forEach(x=>x.onclick=()=>{
@@ -738,6 +764,63 @@ const bind={
     $('#logout').onclick=()=>{ logout(); S.tab='match'; openGate(); render(); };
   }
 };
+
+/* ---------- riordino Monster: trascina i puntini (o usa le frecce) ---------- */
+let DRAG=null;
+const visibleIds=()=>S.catalog.filter(f=>!f.hidden).map(f=>f.id);
+function saveOrder(ids){ return act('reorderFlavors',{ids}); }
+function dragPlace(D){
+  const t=[...D.box.querySelectorAll(':scope>.fl-wrap')].find(w=>{
+    if(w===D.wrap) return false;
+    const b=w.getBoundingClientRect();
+    return D.x>=b.left&&D.x<=b.right&&D.y>=b.top&&D.y<=b.bottom;
+  });
+  if(!t) return;
+  const kids=[...D.box.children];
+  if(kids.indexOf(D.wrap)<kids.indexOf(t)) t.after(D.wrap); else t.before(D.wrap);
+}
+function initFlavDrag(){
+  $$('[data-grip]').forEach(g=>{
+    g.onpointerdown=e=>{
+      if(e.button>0||DRAG) return;
+      e.preventDefault();
+      const wrap=g.closest('.fl-wrap'), r=wrap.getBoundingClientRect();
+      const ghost=wrap.cloneNode(true); ghost.classList.add('fl-ghost');
+      ghost.style.cssText=`left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`;
+      document.body.appendChild(ghost);
+      wrap.classList.add('dragging'); document.body.classList.add('dragging-flav');
+      // il puntatore si aggancia alla griglia (che non si sposta), non alla lattina: spostando la lattina nel DOM si perderebbe
+      const box=wrap.parentElement;
+      try{ box.setPointerCapture(e.pointerId); }catch{}
+      const D=DRAG={wrap,box,ghost,dx:e.clientX-r.left,dy:e.clientY-r.top,x:e.clientX,y:e.clientY,
+        timer:setInterval(()=>{ if(D.y<90) scrollBy(0,-14); else if(D.y>innerHeight-110) scrollBy(0,14); else return; dragPlace(D); },16)};
+      S.dragging=true;
+      box.onpointermove=ev=>{
+        D.x=ev.clientX; D.y=ev.clientY;
+        ghost.style.left=(D.x-D.dx)+'px'; ghost.style.top=(D.y-D.dy)+'px';
+        dragPlace(D);
+      };
+      box.onpointerup=box.onpointercancel=ev=>{
+        clearInterval(D.timer); ghost.remove(); wrap.classList.remove('dragging'); document.body.classList.remove('dragging-flav');
+        try{ box.releasePointerCapture(ev.pointerId); }catch{}
+        box.onpointermove=box.onpointerup=box.onpointercancel=null;
+        DRAG=null; S.dragging=false;
+        const ids=[...D.box.querySelectorAll(':scope>.fl-wrap')].map(w=>w.dataset.id);
+        if(ev.type==='pointerup' && ids.join()!==visibleIds().join()) saveOrder(ids);
+        else if(S.dirty){ S.dirty=false; render(); }
+        else if(ev.type==='pointercancel') render();
+      };
+    };
+    g.onkeydown=async e=>{
+      const d={ArrowLeft:-1,ArrowUp:-1,ArrowRight:1,ArrowDown:1}[e.key]; if(!d) return;
+      e.preventDefault();
+      const ids=visibleIds(), i=ids.indexOf(g.dataset.grip), j=i+d;
+      if(i<0||j<0||j>=ids.length) return;
+      [ids[i],ids[j]]=[ids[j],ids[i]];
+      if(await saveOrder(ids)) document.querySelector(`[data-grip="${g.dataset.grip}"]`)?.focus();
+    };
+  });
+}
 
 /* ---------- preferenze di un giocatore ---------- */
 function openPrefs(id){
@@ -779,7 +862,7 @@ async function shrink(file){
     const img=new Image(); img.src=url; await img.decode();
     const s=Math.min(1,360/Math.max(img.naturalWidth,img.naturalHeight));
     const c=document.createElement('canvas'); c.width=Math.round(img.naturalWidth*s); c.height=Math.round(img.naturalHeight*s);
-    const x=c.getContext('2d'); x.fillStyle='#1a1e17'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    const x=c.getContext('2d'); x.fillStyle='#2e2a22'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
     return c.toDataURL('image/jpeg',.85);
   } finally { URL.revokeObjectURL(url); }
 }
@@ -799,7 +882,7 @@ function openFlavDlg(id){
   FE={id, builtin:!!f?.builtin, img:f?.img||null, newImg:null, removeImg:false};
   $('#flavTitle').textContent=f?f.name:'Nuova Monster';
   $('#flavName').value=f?.name||'';
-  $('#fcBody').value=f?.body||'#ff5c8a'; $('#fcAccent').value=f?.accent||'#ffffff'; $('#fcInk').value=f?.ink||'#ffffff';
+  $('#fcBody').value=f?.body||'#ff5c8a'; $('#fcAccent').value=f?.accent||'#ffffff'; $('#fcInk').value=f?.ink||'#ffffff'; syncHex();
   const del=$('#flavDel'); del.hidden=!f||!!f.hidden; del.classList.remove('arm');
   del.textContent=FE.builtin?'Nascondi':'Elimina';
   $('#flavRestore').hidden=!(FE.builtin&&f?.edited);
@@ -813,7 +896,22 @@ function openFlavDlg(id){
   flavPreview();
   $('#flavDlg').showModal(); if(!f) setTimeout(()=>$('#flavName').focus(),30);
 }
-['#flavName','#fcBody','#fcAccent','#fcInk'].forEach(sel=>$(sel).oninput=flavPreview);
+$('#flavName').oninput=flavPreview;
+// ogni colore si sceglie dal selettore oppure scrivendo il codice (#f9fe02, anche senza # o in forma corta #fc0)
+const COLS=[['fcBody','fhBody'],['fcAccent','fhAccent'],['fcInk','fhInk']];
+const parseHex=v=>{
+  const m=/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(v).trim()); if(!m) return null;
+  let h=m[1].toLowerCase(); if(h.length===3) h=[...h].map(c=>c+c).join('');
+  return '#'+h;
+};
+function syncHex(){ COLS.forEach(([c,h])=>{ $('#'+h).value=$('#'+c).value; $('#'+h).classList.remove('bad'); }); }
+COLS.forEach(([c,h])=>{
+  const pick=$('#'+c), hx=$('#'+h);
+  pick.oninput=()=>{ hx.value=pick.value; hx.classList.remove('bad'); flavPreview(); };
+  hx.oninput=()=>{ const v=parseHex(hx.value); hx.classList.toggle('bad',!v&&hx.value.trim()!==''); if(v){ pick.value=v; flavPreview(); } };
+  hx.onblur=()=>{ hx.value=parseHex(hx.value)||pick.value; hx.classList.remove('bad'); };
+  hx.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); hx.blur(); } }; // Invio non deve salvare mentre scrivi il colore
+});
 $('#flavPhoto').onclick=()=>pickPhoto(img=>{ FE.newImg=img; FE.removeImg=false; flavPreview(); });
 $('#flavNoPhoto').onclick=()=>{ FE.newImg=null; FE.removeImg=true; flavPreview(); };
 $('#flavCancel').onclick=()=>$('#flavDlg').close();

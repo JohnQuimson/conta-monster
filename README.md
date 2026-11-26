@@ -69,5 +69,7 @@ Nota: i dati salvati in locale (`data/`) non vengono caricati online: online si 
 - **Conti**: la lista già compensata di chi dà a chi. Tocca "Guarda cosa vuole …" per vedere le Monster scelte da chi riceve,
   in ordine (se la prima non c'è al supermercato, prendi la seconda). Chi riceve preme "Ricevuta".
 - **Storico**: partite, consegne e modifiche, con chi le ha fatte e quando.
-- **Gruppo**: aggiungi amici, nascondili, metti le foto vere delle lattine o crea gusti nuovi.
+- **Monster**: crea e modifica le lattine (nome e tre colori: lattina, logo M, scritta; anche con il codice, per esempio `#f9fe02`),
+  nascondile o eliminale, e cambia l'ordine trascinando i puntini ⋮⋮ (con la tastiera: frecce). L'ordine vale per tutto il gruppo.
+- **Gruppo**: aggiungi amici e nascondili.
 - **Profilo** (tocca il tuo nome in alto): scegli fino a 3 Monster preferite, cambia nome o PIN.
