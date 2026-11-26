@@ -471,11 +471,14 @@ function canLines(name){
   for(let i=1;i<w.length;i++){ const a=w.slice(0,i).join(' '), b=w.slice(i).join(' '), m=Math.max(a.length,b.length); if(!best||m<best.m) best={m,l:[a,b]}; }
   return best.l;
 }
-// M a tre artigli: disegno nostro, ispirato al logo (non è il logo originale)
-const M_PATH='M0 40L2 6L10 0L20 22L30 0L38 6L40 40L31 40L30 18L22 36L18 36L10 18L9 40Z';
+// M fatta da tre graffi (artigli) irregolari, che si assottigliano in basso: disegno nostro, ispirato al logo (non è quello originale).
+// Riquadro 62×100: graffio sinistro, centrale (il più lungo) e destro, larghi in alto e a punta in basso.
+const M_PATH='M0 14L7 8L15 5L21 6L22 20L20 34L23 48L21 62L21 76L18 92L15 78L13 64L10 52L11 42L8 34L3 25Z'
+  +'M25 14L30 5L37 0L44 4L42 18L44 32L42 48L41 64L37 82L33 100L30 84L28 68L27 54L29 42L27 30Z'
+  +'M47 22L52 15L58 11L62 13L60 28L61 42L58 56L56 70L52 85L50 72L50 60L49 48L51 38L49 30Z';
 function can(fid, extra=''){
   const f=S.cat[fid]; if(!f) return '';
-  const L=canLines(f.name), longest=Math.max(1,...L.map(l=>l.length)), fs=Math.min(10, 44/(longest*.66)), lh=fs*1.25, cy=78;
+  const L=canLines(f.name), longest=Math.max(1,...L.map(l=>l.length)), fs=Math.min(10, 44/(longest*.66)), lh=fs*1.25, cy=81;
   const ys=L.length===1?[cy]:[cy-lh/2,cy+lh/2];
   const text=L.map((l,i)=>`<text x="28" y="${ys[i].toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="font:700 ${fs.toFixed(1)}px 'Space Grotesk',sans-serif;letter-spacing:.02em" fill="${esc(f.ink)}">${esc(l)}</text>`).join('');
   const photo=f.img?`<img src="/api/img?id=${esc(f.img)}" alt="${esc(f.name)}" loading="lazy" onerror="this.remove()">`:'';
@@ -483,7 +486,7 @@ function can(fid, extra=''){
     <rect x="10" y="1" width="36" height="8" rx="3" fill="url(#lid)"/>
     <g clip-path="url(#canclip)">
       <rect x="0" y="0" width="56" height="104" fill="${esc(f.body)}"/>
-      <path transform="translate(13 26) scale(.75)" d="${M_PATH}" fill="${esc(f.accent)}" stroke="${esc(f.ink)}" stroke-width="1.3" stroke-linejoin="round"/>
+      <path transform="translate(10.6 12) scale(.56)" d="${M_PATH}" fill="${esc(f.accent)}" stroke="${esc(f.ink)}" stroke-width="1.6" stroke-linejoin="round"/>
       ${text}
       <rect x="0" y="0" width="56" height="104" fill="url(#shine)"/>
     </g></svg>${photo}</span>`;
