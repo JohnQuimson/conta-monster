@@ -8,6 +8,15 @@ import { handle, image } from './lib/app.js';
 const PORT = Number(process.env.PORT || 3000);
 const INDEX = new URL('./index.html', import.meta.url);
 
+const STATIC = {
+  '/icon.svg': 'image/svg+xml',
+  '/favicon-32.png': 'image/png',
+  '/apple-touch-icon.png': 'image/png',
+  '/icon-192.png': 'image/png',
+  '/icon-512.png': 'image/png',
+  '/manifest.webmanifest': 'application/manifest+json',
+};
+
 const send = (res, code, type, data, extra = {}) => { res.writeHead(code, { 'Content-Type': type, ...extra }); res.end(data); };
 
 http.createServer(async (req, res) => {
@@ -26,6 +35,10 @@ http.createServer(async (req, res) => {
     if (url.pathname === '/api/img') {
       const buf = await image(url.searchParams.get('id'));
       return buf ? send(res, 200, 'image/jpeg', buf, { 'Cache-Control': 'public, max-age=31536000, immutable' }) : send(res, 404, 'text/plain', 'Non trovata');
+    }
+    // icone e manifest (online, su Vercel, sono semplici file nella radice del progetto)
+    if (STATIC[url.pathname]) {
+      return send(res, 200, STATIC[url.pathname], await readFile(new URL('.' + url.pathname, import.meta.url)), { 'Cache-Control': 'no-cache' });
     }
     if (url.pathname === '/' || url.pathname === '/index.html') {
       return send(res, 200, 'text/html; charset=utf-8', await readFile(INDEX), { 'Cache-Control': 'no-cache' });
