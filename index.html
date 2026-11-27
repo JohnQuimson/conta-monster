@@ -35,31 +35,32 @@ button,a,summary{touch-action:manipulation}
 .gate input{-webkit-user-select:text;user-select:text}
 
 /* lattine */
-.can{display:inline-block;aspect-ratio:56/104;height:48px;flex:none}
-.can svg{width:100%;height:100%;display:block}
+.can{--h:48px;position:relative;display:inline-block;height:var(--h);width:calc(var(--h)*.5385);flex:none}
+.can svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .can.ph{border-radius:6px;overflow:hidden;position:relative}
 .can.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:var(--s3)}
 .av{width:38px;height:38px;border-radius:50%;background:var(--s3);display:inline-grid;place-items:center;flex:none;overflow:hidden;border:2px solid var(--ink);font:700 16px var(--font);color:var(--c,var(--tx))}
-.av .can{height:31px;margin-top:6px}
-.av.lg{width:66px;height:66px;font-size:26px;border-width:2.5px;box-shadow:var(--sh-s)} .av.lg .can{height:56px;margin-top:10px}
-.av.sm{width:28px;height:28px;font-size:12px} .av.sm .can{height:23px;margin-top:4px}
+.av .can{--h:31px;margin-top:6px}
+.av.lg{width:66px;height:66px;font-size:26px;border-width:2.5px;box-shadow:var(--sh-s)} .av.lg .can{--h:56px;margin-top:10px}
+.av.sm{width:28px;height:28px;font-size:12px} .av.sm .can{--h:23px;margin-top:4px}
 
 /* header */
 header.wrap{padding:calc(32px + env(safe-area-inset-top)) 16px 4px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:inline-block;align-self:flex-start;background:var(--yel);color:var(--ink);font:700 19px var(--font);padding:4px 11px;border:var(--bd);border-radius:9px;transform:rotate(-2deg);box-shadow:var(--sh-s);letter-spacing:-.01em}
 .me{display:flex;align-items:center;gap:8px;border:var(--bd);background:var(--s1);border-radius:999px;padding:3px 13px 3px 3px;font-weight:700;box-shadow:var(--sh-s)}
-.me .av{width:30px;height:30px} .me .av .can{height:25px;margin-top:5px}
+.me .av{width:30px;height:30px} .me .av .can{--h:25px;margin-top:5px}
 .me.out{padding:8px 16px;background:var(--grn);color:var(--ink)}
 .hero{display:flex;align-items:center;gap:12px;margin:18px 0 4px;padding:12px 16px;border:var(--bd);border-radius:20px;background:var(--hbg,var(--s1));box-shadow:5px 5px 0 var(--ink);color:var(--tx)}
 .hero.lit{color:var(--ink)}
-.hero .hl{flex:1;min-width:0}
+.hero .hl{flex:1 1 0;min-width:50%}
 .hero small{display:block;font:700 15px var(--font)}
 .hero b{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;font:700 clamp(48px,14vw,72px)/.95 var(--font);letter-spacing:-.04em}
 .hero b span{font-size:clamp(18px,6vw,24px);letter-spacing:0;line-height:1.2}
 .hero em{display:block;font:600 13px/1.4 var(--font);font-style:normal;margin-top:6px;opacity:.85}
-.hero .cans{display:flex;flex:none;align-items:flex-end;gap:6px;padding-right:2px}
-.hero .cans .can{height:clamp(52px,15vw,72px);filter:drop-shadow(2px 2px 0 var(--ink))}
+.hero .cans{display:flex;flex:none;align-items:flex-end;max-width:42%;padding-right:4px}
+.hero .cans .can{--h:clamp(50px,16vw,70px);margin-left:-10px;transform:rotate(var(--rot,0deg));filter:drop-shadow(3px 3px 0 var(--ink))}
+.hero .cans .can:first-child{margin-left:0}
 
 /* nav */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--s1);border-top:var(--bd);padding:10px 0 calc(12px + env(safe-area-inset-bottom))}
@@ -87,7 +88,7 @@ h2:first-child{margin-top:4px}
 .slot{border:2px dashed color-mix(in srgb,var(--ink) 45%,transparent);border-radius:10px;padding:4px 10px 4px 4px;font-weight:700;font-size:16px;min-height:44px;display:flex;align-items:center;gap:8px;color:color-mix(in srgb,var(--ink) 55%,transparent)}
 .slot:not(.full){padding-left:12px}
 .slot.full{border:2px solid var(--ink);background:#fffaf0;color:var(--ink);animation:pop .18s ease-out}
-.slot .av{width:32px;height:32px;border-radius:8px;background:#f3ead2} .slot .av .can{height:27px;margin-top:5px}
+.slot .av{width:32px;height:32px;border-radius:8px;background:#f3ead2} .slot .av .can{--h:27px;margin-top:5px}
 @keyframes pop{from{transform:scale(.9) rotate(-3deg);opacity:.4}}
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .ghost{font:600 13px var(--font);color:var(--tx);border:var(--bd);background:var(--s1);border-radius:10px;padding:8px 12px;white-space:nowrap;box-shadow:var(--sh-s);transition:transform .08s,box-shadow .08s}
@@ -97,7 +98,7 @@ h2:first-child{margin-top:4px}
 /* chip giocatori */
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{border:var(--bd);background:var(--s1);border-radius:999px;padding:4px 15px 4px 4px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--sh-s);transition:transform .08s,background .12s}
-.chip .av{width:30px;height:30px} .chip .av .can{height:25px;margin-top:5px}
+.chip .av{width:30px;height:30px} .chip .av .can{--h:25px;margin-top:5px}
 .chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .chip em{display:none}
 .chip.A{background:var(--a);color:var(--ink);box-shadow:none;transform:translate(2px,2px)}
@@ -132,7 +133,7 @@ h2:first-child{margin-top:4px}
 button.wants{cursor:pointer;box-shadow:var(--sh-s);transition:transform .08s,box-shadow .08s}
 button.wants:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .wants .cans{display:flex;gap:4px}
-.wants .can{height:42px;filter:drop-shadow(2px 2px 0 var(--ink))}
+.wants .can{--h:42px;filter:drop-shadow(2px 2px 0 var(--ink))}
 .wants p{font-size:14px;color:var(--mu);line-height:1.3;flex:1;min-width:0}
 .wants p b{color:var(--tx);font-weight:700}
 .wants .go{font:700 24px/1 var(--font);color:var(--yel)}
@@ -178,7 +179,7 @@ button.wants:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)
 .prow .btns .ghost{padding:7px 9px;font-size:12px}
 .prow .nm{font-weight:700;font-size:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .prow .sub{font:500 12px var(--font);color:var(--dim);display:flex;align-items:center;gap:6px;margin-top:3px}
-.prow .sub .can{height:22px}
+.prow .sub .can{--h:22px}
 .prow input.ren{background:transparent;border:2px dashed var(--s3);border-radius:8px;padding:4px 8px;font-weight:700;font-size:16px;width:100%;max-width:200px}
 .pill{font:700 11px var(--font);padding:2px 7px;border-radius:6px;background:var(--s3);color:var(--mu);border:2px solid var(--ink)}
 .pill.you{background:var(--yel);color:var(--ink)}
@@ -186,7 +187,7 @@ button.wants:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)
 
 .flavs{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px}
 .fl{position:relative;background:var(--s1);border:var(--bd);border-radius:var(--r);padding:14px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;box-shadow:var(--sh-s);transition:transform .08s,box-shadow .08s,background .12s}
-.fl .can{height:92px;filter:drop-shadow(3px 3px 0 var(--ink));transition:transform .2s}
+.fl .can{--h:92px;filter:drop-shadow(3px 3px 0 var(--ink));transition:transform .2s}
 .fl:hover .can{transform:rotate(-5deg)}
 .fl .fn{font-weight:700;font-size:13px;line-height:1.15}
 .fl .fb{font:500 11px var(--font);color:var(--dim)}
@@ -251,15 +252,15 @@ dialog{background:var(--s1);color:var(--tx);border:var(--bd);border-radius:20px;
 dialog::backdrop{background:rgba(0,0,0,.7)}
 dialog h3{font:700 26px var(--font);letter-spacing:-.02em;margin-bottom:14px}
 dialog .prev{display:flex;gap:14px;align-items:center}
-dialog .prev .can{height:110px;filter:drop-shadow(3px 3px 0 var(--ink))}
+dialog .prev .can{--h:110px;filter:drop-shadow(3px 3px 0 var(--ink))}
 dialog .prev .col{flex:1;display:flex;flex-direction:column;gap:10px}
 dialog input[type=color]{width:100%;height:44px;border:var(--bd);border-radius:12px;background:var(--bg);padding:3px}
 dialog menu{display:flex;gap:10px;padding:0;justify-content:flex-end;align-items:center;flex-wrap:wrap;margin-top:18px}
 dialog menu .sp{flex:1}
 .fed{display:flex;gap:16px;align-items:flex-start}
 .fprev{display:flex;align-items:flex-end;gap:8px;padding:12px;background:var(--s2);border:2px solid var(--ink);border-radius:14px;min-height:150px}
-.fprev .can{height:124px;filter:drop-shadow(3px 3px 0 var(--ink))}
-.fprev .can+.can{height:84px}
+.fprev .can{--h:124px;filter:drop-shadow(3px 3px 0 var(--ink))}
+.fprev .can+.can{--h:84px}
 .fed .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
 .lbl{font:600 13px var(--font);color:var(--mu);display:flex;flex-direction:column;gap:6px}
 .colors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
@@ -279,7 +280,7 @@ dialog menu .sp{flex:1}
 .pref{display:flex;align-items:center;gap:14px;background:var(--s2);border:var(--bd);border-radius:14px;padding:10px 14px;box-shadow:var(--sh-s)}
 .pref .no{width:34px;height:34px;border-radius:50%;background:var(--yel);color:var(--ink);border:2px solid var(--ink);font:700 17px/30px var(--font);text-align:center;flex:none}
 .pref:nth-child(2) .no{background:var(--tx)} .pref:nth-child(3) .no{background:var(--s3);color:var(--tx)}
-.pref .can{height:74px;filter:drop-shadow(3px 3px 0 var(--ink))}
+.pref .can{--h:74px;filter:drop-shadow(3px 3px 0 var(--ink))}
 .pref .pn{font:700 18px/1.15 var(--font)}
 .pref .ps{font:500 13px var(--font);color:var(--mu);margin-top:3px}
 .opt{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;padding:12px 14px!important;margin-top:10px;white-space:normal!important}
