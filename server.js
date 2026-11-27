@@ -8,13 +8,15 @@ import { handle, image } from './lib/app.js';
 const PORT = Number(process.env.PORT || 3000);
 const INDEX = new URL('./index.html', import.meta.url);
 
+// Icone e manifest. Ogni file è nominato per esteso con `new URL('./…', import.meta.url)`: è così che Vercel capisce
+// quali file includere nella funzione online (un percorso calcolato a runtime non verrebbe incluso → errore 500).
 const STATIC = {
-  '/icon.svg': 'image/svg+xml',
-  '/favicon-32.png': 'image/png',
-  '/apple-touch-icon.png': 'image/png',
-  '/icon-192.png': 'image/png',
-  '/icon-512.png': 'image/png',
-  '/manifest.webmanifest': 'application/manifest+json',
+  '/icon.svg': ['image/svg+xml', new URL('./icon.svg', import.meta.url)],
+  '/favicon-32.png': ['image/png', new URL('./favicon-32.png', import.meta.url)],
+  '/apple-touch-icon.png': ['image/png', new URL('./apple-touch-icon.png', import.meta.url)],
+  '/icon-192.png': ['image/png', new URL('./icon-192.png', import.meta.url)],
+  '/icon-512.png': ['image/png', new URL('./icon-512.png', import.meta.url)],
+  '/manifest.webmanifest': ['application/manifest+json', new URL('./manifest.webmanifest', import.meta.url)],
 };
 
 const send = (res, code, type, data, extra = {}) => { res.writeHead(code, { 'Content-Type': type, ...extra }); res.end(data); };
@@ -36,9 +38,9 @@ http.createServer(async (req, res) => {
       const buf = await image(url.searchParams.get('id'));
       return buf ? send(res, 200, 'image/jpeg', buf, { 'Cache-Control': 'public, max-age=31536000, immutable' }) : send(res, 404, 'text/plain', 'Non trovata');
     }
-    // icone e manifest (online, su Vercel, sono semplici file nella radice del progetto)
-    if (STATIC[url.pathname]) {
-      return send(res, 200, STATIC[url.pathname], await readFile(new URL('.' + url.pathname, import.meta.url)), { 'Cache-Control': 'no-cache' });
+    if (Object.hasOwn(STATIC, url.pathname)) {
+      const [type, file] = STATIC[url.pathname];
+      return send(res, 200, type, await readFile(file), { 'Cache-Control': 'public, max-age=3600' });
     }
     if (url.pathname === '/' || url.pathname === '/index.html') {
       return send(res, 200, 'text/html; charset=utf-8', await readFile(INDEX), { 'Cache-Control': 'no-cache' });
